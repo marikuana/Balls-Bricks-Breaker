@@ -23,7 +23,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"{Balls} | FPS: {1f / Time.deltaTime}");
+        //Debug.Log($"{Balls} | FPS: {1f / Time.deltaTime}");
 
         Vector3 cursorPos = camera.ScreenToWorldPoint(Input.mousePosition);
         cursorPos.z = transform.position.z;
@@ -37,7 +37,8 @@ public class Gun : MonoBehaviour
         {
             Bullet bullet = Instantiate(bulletPref);
             bullet.transform.position = transform.position;
-            bullet.movement = vector;
+            //bullet.SetMovement(vector);
+            bullet.SetMovement(new Vector3(-0.741407600f, 0.671055000f, 0.00000000f));
             lastShot = DateTime.Now;
             Balls++;
         }
