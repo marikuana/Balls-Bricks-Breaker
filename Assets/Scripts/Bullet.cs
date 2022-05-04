@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
         transform.position += (Vector3)offset;
        
 
-        RaycastHit2D[] raycasts = Physics2D.RaycastAll(transform.position, offset, 0.2f);
+        RaycastHit2D[] raycasts = Physics2D.CircleCastAll(transform.position, 0.1f, offset, 0.1f);
         if (raycasts.Length > 0)
         {
             if (raycasts[0].collider.TryGetComponent(out IDamageable damageable))
@@ -37,6 +37,8 @@ public class Bullet : MonoBehaviour
             }
             Debug.Log($"RayCasts: {raycasts.Length}");
             ChangeMovement(raycasts[0].normal);
+
+            SetColor(Random.value > 0.5f ? Color.yellow : Color.blue);
         }
 
         //transform.Translate(movement * speed * Time.deltaTime);
@@ -86,5 +88,48 @@ public class Bullet : MonoBehaviour
     {
         Gun.Balls--;
         Destroy(gameObject);
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        int i = 0;
+        Gizmos.color = Color.yellow;
+
+        Vector3 position = transform.position;
+        float distance = speed;
+        Vector3 direction = movement.normalized;
+
+        while (distance > 0f)
+        {
+            Vector2 normal = Vector2.zero;
+            float disToHit = 0f;
+
+            RaycastHit2D hit = Physics2D.CircleCast(position, 0.1f, direction, distance);
+            if (hit != default(RaycastHit2D))
+            {
+                disToHit = hit.distance;
+                normal = hit.normal;
+            }
+            else
+            {
+                Gizmos.DrawRay(position, direction * distance);
+                Gizmos.DrawWireSphere(position, 0.1f);
+                break;
+            }
+
+            Gizmos.DrawRay(position, direction * (disToHit == 0f ? distance : disToHit));
+            position += direction * disToHit;
+            Gizmos.DrawWireSphere(position, 0.1f);
+
+            distance -= disToHit;
+
+            if (normal != Vector2.zero)
+                direction = Vector3.Reflect(direction, normal);
+
+            
+            if (i++ > 100)
+                break;
+        }
+        Debug.Log($"i: {i}");
     }
 }

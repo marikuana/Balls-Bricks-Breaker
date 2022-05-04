@@ -37,8 +37,8 @@ public class Gun : MonoBehaviour
         {
             Bullet bullet = Instantiate(bulletPref);
             bullet.transform.position = transform.position;
-            //bullet.SetMovement(vector);
-            bullet.SetMovement(new Vector3(-0.741407600f, 0.671055000f, 0.00000000f));
+            bullet.SetMovement(vector);
+            //bullet.SetMovement(new Vector3(-0.741407600f, 0.671055000f, 0.00000000f));
             lastShot = DateTime.Now;
             Balls++;
         }
