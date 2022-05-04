@@ -10,63 +10,57 @@ public class Bullet : MonoBehaviour
     private Vector3 spawnPosition;
     [SerializeField] private float destroyDistance = 10f;
     private SpriteRenderer spriteRenderer;
-    Rigidbody2D rb;
 
     void Awake()
     {
         spawnPosition = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
     }
-    
+
     void Update()
     {
-        //rb.velocity = movement * speed;
-        Vector2 offset = movement.normalized * (speed * Time.deltaTime);
+        Vector3 position = transform.position;
+        float distance = speed * Time.deltaTime;
+        Vector3 direction = movement.normalized;
 
-        //rb.MovePosition(rb.position + offset);
-        transform.position += (Vector3)offset;
-       
-
-        RaycastHit2D[] raycasts = Physics2D.CircleCastAll(transform.position, 0.1f, offset, 0.1f);
-        if (raycasts.Length > 0)
+        while (distance > 0f)
         {
-            if (raycasts[0].collider.TryGetComponent(out IDamageable damageable))
-            {
-                damageable.Damage(1);
-            }
-            Debug.Log($"RayCasts: {raycasts.Length}");
-            ChangeMovement(raycasts[0].normal);
+            Vector2 normal = Vector2.zero;
+            float disToHit = 0f;
 
-            SetColor(Random.value > 0.5f ? Color.yellow : Color.blue);
+            RaycastHit2D hit = Physics2D.CircleCast(position + direction * 0.01f, 0.1f, direction, distance);
+            if (hit != default(RaycastHit2D))
+            {
+                disToHit = hit.distance;
+                normal = hit.normal;
+                if (hit.collider.TryGetComponent(out IDamageable damageable))
+                {
+                    damageable.Damage(1);
+                }
+
+                SetColor(Random.value > 0.5f ? Color.yellow : Color.blue);
+            }
+            else
+            {
+                disToHit = distance;
+            }
+
+            position += direction * disToHit;
+
+            distance -= disToHit;
+
+            if (normal != Vector2.zero)
+                direction = Vector3.Reflect(direction, normal).normalized;
         }
 
-        //transform.Translate(movement * speed * Time.deltaTime);
+        transform.position = position;
+        movement = direction;
+
         if (Vector3.Distance(spawnPosition, transform.position) > destroyDistance)
         {
             Destroy();
         }
     }
-
-    /*private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out IDamageable damageable))
-            damageable.Damage(1);
-
-        Debug.Log(collision.contacts.Length);
-        IEnumerable<Vector2> normals = collision.contacts.Select(s => s.normal);
-        Vector2 sum = new Vector2();
-        foreach (var vector in normals)
-        {
-            sum.x += vector.x;
-            sum.y += vector.y;
-        }
-        Vector2 normal = new Vector2(sum.x / normals.Count(), sum.y / normals.Count());
-        //Vector2 normal = collision.contacts.First().normal;
-        ChangeMovement(normal);
-
-        SetColor(Random.value > 0.5f ? Color.yellow : Color.blue);
-    }*/
 
     public void ChangeMovement(Vector3 normal)
     {
@@ -76,7 +70,6 @@ public class Bullet : MonoBehaviour
     public void SetMovement(Vector3 movement)
     {
         this.movement = movement.normalized;
-        //rb.velocity = movement * speed;
     }
 
     private void SetColor(Color color)
@@ -89,21 +82,25 @@ public class Bullet : MonoBehaviour
         Gun.Balls--;
         Destroy(gameObject);
     }
-    
+
+    [SerializeField] private float gizmosDistance = 5f;
+
     private void OnDrawGizmosSelected()
     {
         int i = 0;
         Gizmos.color = Color.yellow;
 
         Vector3 position = transform.position;
-        float distance = speed;
+        float distance = gizmosDistance;
         Vector3 direction = movement.normalized;
 
         while (distance > 0f)
         {
             Vector2 normal = Vector2.zero;
-            float disToHit = 0f;
+            float disToHit;
 
+            position = position + direction * 0.1f;
+            Gizmos.DrawWireSphere(position, 0.1f);
             RaycastHit2D hit = Physics2D.CircleCast(position, 0.1f, direction, distance);
             if (hit != default(RaycastHit2D))
             {
@@ -112,12 +109,10 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                Gizmos.DrawRay(position, direction * distance);
-                Gizmos.DrawWireSphere(position, 0.1f);
-                break;
+                disToHit = distance;
             }
 
-            Gizmos.DrawRay(position, direction * (disToHit == 0f ? distance : disToHit));
+            Gizmos.DrawRay(position, direction * disToHit);
             position += direction * disToHit;
             Gizmos.DrawWireSphere(position, 0.1f);
 
@@ -126,7 +121,6 @@ public class Bullet : MonoBehaviour
             if (normal != Vector2.zero)
                 direction = Vector3.Reflect(direction, normal);
 
-            
             if (i++ > 100)
                 break;
         }
