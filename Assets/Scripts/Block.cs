@@ -47,7 +47,7 @@ public class Block : MonoBehaviour, IDamageable
         Destroy(gameObject);
     }
 
-    private void SetColor(Color color)
+    public void SetColor(Color color)
     {
         spriteRenderer.color = color;
     }

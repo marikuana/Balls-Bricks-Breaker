@@ -45,6 +45,8 @@ public class Gun : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
             autoShot = !autoShot;
+
+        Debug.Log($"Bullet: {Balls}");
     }
 
     private bool CanShoot() =>
