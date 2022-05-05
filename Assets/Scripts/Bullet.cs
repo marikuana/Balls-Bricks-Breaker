@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,43 +30,22 @@ public class Bullet : MonoBehaviour
         while (distance > 0f)
         {
             Vector2 normal = Vector2.zero;
-            float disToHit;
 
-            RaycastHit2D hit = Physics2D.CircleCast(position + direction * 0.1f, 0.1f, direction);
-
+            RaycastHit2D hit = Physics2D.CircleCast(position + direction * 0.1f, 0.1f, direction, distance);
             if (hit != default(RaycastHit2D))
             {
-                disToHit = hit.distance;
-                normal = hit.normal;
-
-                Vector3 contactPoint = position + direction * disToHit + direction * 0.1f;
-                RaycastHit2D hit2 = Physics2D.Raycast(contactPoint, Average(Vector2.Reflect(direction, normal), direction), 0.1f);
-                if (hit2 != default(RaycastHit2D))
+                RaycastHit2D[] hits = GetHits(position, 0.1f);
+                if (hits.Length > 0)
                 {
-                    normal = Average(normal, hit2.normal);
+                    normal = Average(hits.Select(s => s.normal).ToArray());
 
-                    if (hit2.collider.TryGetComponent(out IDamageable damageable1))
-                    {
-                        damageable1.Damage(1);
-                    }
+                    if (hit.collider.TryGetComponent(out IDamageable damageable))
+                        damageable.Damage(1);
+
+                    SetColor(UnityEngine.Random.value > 0.5f ? Color.yellow : Color.blue);
                 }
-
-                if(hit.collider.TryGetComponent(out IDamageable damageable))
-                {
-                    damageable.Damage(1);
-                }
-
-                SetColor(Random.value > 0.5f ? Color.yellow : Color.blue);
-
-            }
-            else
-            {
-                disToHit = distance;
             }
 
-            position += direction * disToHit + direction * 0.1f;
-
-            distance -= disToHit;
 
             if (normal != Vector2.zero)
             {
@@ -76,8 +56,13 @@ public class Bullet : MonoBehaviour
                     direction *= -1;
                 else
                     direction = newDirection;
-
+                direction = direction.normalized;
             }
+
+            Vector3 velocity = direction * speed * Time.deltaTime;
+            position += velocity;// disToHit;
+
+            distance -= velocity.magnitude;
 
             if (++i >= 100)
             {
@@ -95,6 +80,34 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="radius"></param>
+    /// <returns>normal</returns>
+    public RaycastHit2D[] GetHits(Vector2 position, float radius)
+    {
+        List<Vector2> vectors = new List<Vector2>()
+        {
+            new Vector2(0, 1),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(1, 0),
+            new Vector2(0.5f, -0.5f),
+            new Vector2(0, -1),
+            new Vector2(-0.5f, -0.5f),
+            new Vector2(-1, 0),
+            new Vector2(-0.5f, 0.5f)
+        };
+        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        foreach (var vector in vectors)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(position, vector, radius);
+            if (hit != default(RaycastHit2D))
+                hits.Add(hit);
+        }
+        return hits.ToArray();
+    }
 
     public void ChangeMovement(Vector3 normal)
     {
@@ -134,35 +147,24 @@ public class Bullet : MonoBehaviour
         while (distance > 0f)
         {
             Vector2 normal = Vector2.zero;
-            float disToHit;
+            float hitDis = 0f;
 
-            RaycastHit2D hit = Physics2D.CircleCast(position + direction * 0.1f, 0.1f, direction);
-
+            RaycastHit2D hit = Physics2D.CircleCast(position + direction * 0.1f, 0.1f, direction, distance);
             if (hit != default(RaycastHit2D))
             {
-                disToHit = hit.distance;
-                normal = hit.normal;
-                Debug.Log($"{normal} | {hit.collider.transform.position}");
-                Vector3 contactPoint = position + direction * disToHit + direction * 0.1f;
-                RaycastHit2D hit2 = Physics2D.Raycast(contactPoint, Average(Vector2.Reflect(direction, normal), direction), 0.1f);
-                if (hit2 != default(RaycastHit2D))
+                hitDis = hit.distance + 0.1f;
+                RaycastHit2D[] hits = GetHits(position + direction * hitDis, 0.1f);
+                if (hits.Length > 0)
                 {
-                    normal = Average(normal, hit2.normal);
-                    DrawSphere(hit2.point, Color.red);
+                    normal = Average(hits.Select(s => s.normal).ToArray());
+
+                    foreach (var hit2D in hits)
+                        DrawSphere(hit2D.point, Color.red);
                 }
-
-               DrawSphere(hit.point, Color.red);
-            }
-            else
-            {
-                disToHit = distance;
             }
 
-            Gizmos.DrawRay(position, direction * disToHit + direction * 0.1f);
-            position += direction * disToHit + direction * 0.1f;
-            Gizmos.DrawWireSphere(position, 0.1f);
-
-            distance -= disToHit;
+            Gizmos.DrawRay(position, direction * hitDis);
+            DrawSphere(position + direction * hitDis, Color.yellow);
 
             if (normal != Vector2.zero)
             {
@@ -173,13 +175,20 @@ public class Bullet : MonoBehaviour
                     direction *= -1;
                 else
                     direction = newDirection;
-
+                direction = direction.normalized;
                 log.AppendLine($"newDirection => {direction}");
             }
 
+            Vector3 velocity = direction * hitDis;
+            
+            position += velocity;// disToHit;
+
+            distance -= velocity.magnitude;
+            
             if (++i >= gizmosMaxContact)
                 break;
         }
+
         log.AppendLine($"i: {i}");
         Debug.Log(log);
     }
