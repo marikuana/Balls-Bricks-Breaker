@@ -8,6 +8,7 @@ public class Block : MonoBehaviour, IDamageable
     [SerializeField] public float health = 10f;
     private SpriteRenderer spriteRenderer;
     private TextMesh label;
+    [SerializeField] private Sprite[] sprites;
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class Block : MonoBehaviour, IDamageable
     private void Start()
     {
         SetText(health.ToString());
+        spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
     }
 
     public void Damage(int value)
@@ -38,7 +40,7 @@ public class Block : MonoBehaviour, IDamageable
 
     private void SetText(string text)
     {
-        label.characterSize = 0.2f - 0.04f * text.Length;
+        //label.characterSize = 0.2f - 0.04f * text.Length;
         label.text = text.ToString();
     }
 
@@ -50,5 +52,10 @@ public class Block : MonoBehaviour, IDamageable
     public void SetColor(Color color)
     {
         spriteRenderer.color = color;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Damage(1);
     }
 }

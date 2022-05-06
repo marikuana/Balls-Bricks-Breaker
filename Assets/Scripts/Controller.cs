@@ -14,7 +14,7 @@ public class Controller : MonoBehaviour
             for (int j = 0; j < 15; j++)
             {
                 Block block = Instantiate(_block);
-                block.transform.position = new Vector3(startPos.x + i * (block.transform.localScale.x * 1f), startPos.y - j * (block.transform.localScale.y * 1f), 0);
+                block.transform.position = new Vector3(startPos.x + i * (block.transform.localScale.x), startPos.y - j * (block.transform.localScale.y), 0);
                 block.health = (i == 0 || j == 0 || i == 24 || j == 14) ? 500 : (float)Random.Range(10, 100);
                 block.SetColor((i + j) % 2 == 0 ? Color.white : Color.gray);
             }

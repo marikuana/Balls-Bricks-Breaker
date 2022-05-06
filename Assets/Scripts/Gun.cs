@@ -6,50 +6,51 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     [SerializeField] private Camera camera;
-    [SerializeField] private Transform arrow;
-    private float distance;
     [SerializeField] private Bullet bulletPref;
     [SerializeField] private float bulletPerSecond = 10f;
-    [SerializeField] private bool autoShot = false;
-
-    private DateTime lastShot = DateTime.MinValue;
 
     public static int Balls = 0;
 
+    [SerializeField] private int ballCount = 5;
+    private LineRenderer lineRenderer;
+
     private void Awake()
     {
-        distance = Vector2.Distance(arrow.transform.position, transform.position);
+        lineRenderer = GetComponent<LineRenderer>();
     }
+
 
     void Update()
     {
-        //Debug.Log($"{Balls} | FPS: {1f / Time.deltaTime}");
-
         Vector3 cursorPos = camera.ScreenToWorldPoint(Input.mousePosition);
         cursorPos.z = transform.position.z;
         Vector3 vector = Vector3.Normalize(cursorPos - transform.position);
         if (vector.y <= 0)
             return;
-        arrow.position = (transform.position + (vector * distance));
         
+        lineRenderer.SetPosition(1, vector * Vector3.Distance(transform.position, cursorPos));
 
-        if ((autoShot || Input.GetButton("Fire1")) && CanShoot())
+        if (Input.GetButtonDown("Fire1"))
         {
-            Bullet bullet = Instantiate(bulletPref);
-            bullet.transform.position = transform.position;
-            bullet.SetMovement(vector);
-            //bullet.SetMovement(new Vector3(-0.741407600f, 0.671055000f, 0.00000000f));
-            lastShot = DateTime.Now;
-            Balls++;
+            StartCoroutine(Shoot(vector));
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-            autoShot = !autoShot;
-
-        Debug.Log($"Bullet: {Balls}");
     }
 
-    private bool CanShoot() =>
-        lastShot < DateTime.Now.AddSeconds(-1f / bulletPerSecond);
+    private IEnumerator Shoot(Vector3 vector)
+    {
+        for (int i = 0; i < ballCount; i++)
+        {
+            LaunchBall(vector);
+            yield return new WaitForSeconds(1f / bulletPerSecond);
+        }
+    }
+
+    private void LaunchBall(Vector3 vector)
+    {
+        Bullet bullet = Instantiate(bulletPref);
+        bullet.transform.position = transform.position;
+        bullet.SetMovement(vector);
+        Balls++;
+    }
 
 }
