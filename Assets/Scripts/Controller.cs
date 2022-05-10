@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+    public static Controller Instance { get; private set; }
+
     [SerializeField] private Block _block;
     private List<Block> _blocks = new List<Block>();
 
     public ProgressData ProgressData;
     private void Awake()
     {
+        Instance = this;
         _blocks = new List<Block>();
         ProgressData = new ProgressData();
     }

@@ -22,7 +22,7 @@ public class Block : MonoBehaviour, IDamageable
         spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
     }
 
-    public void Damage(int value)
+    public void Damage(float value)
     {
         SetHealth(health - value);
         if (!Alive)
@@ -57,7 +57,7 @@ public class Block : MonoBehaviour, IDamageable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.TryGetComponent(out Bullet bullet))
+        if (collision.collider.TryGetComponent(out BallBase bullet))
             bullet.Impact(this);
     }
 }

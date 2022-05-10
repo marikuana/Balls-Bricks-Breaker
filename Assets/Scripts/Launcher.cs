@@ -6,7 +6,7 @@ using UnityEngine;
 public class Launcher : MonoBehaviour
 {
     [SerializeField] private Camera camera;
-    [SerializeField] private Bullet bulletPref;
+    [SerializeField] private BallBase bulletPref;
     [SerializeField] private float bulletPerSecond = 10f;
 
     public static int Balls = 0;
@@ -61,9 +61,7 @@ public class Launcher : MonoBehaviour
 
     private void LaunchBall(Vector3 vector)
     {
-        Bullet bullet = Instantiate(bulletPref);
-        bullet.transform.position = transform.position;
-        bullet.SetMovement(vector);
+        Instantiate(bulletPref).Initialize(transform.position, vector);
         Balls++;
     }
 
