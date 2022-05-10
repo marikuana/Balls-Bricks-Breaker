@@ -14,7 +14,7 @@ public class BulletCounter : MonoBehaviour
 
     void Update()
     {
-        SetBulletCount(Gun.Balls);    
+        SetBulletCount(Launcher.Balls);    
     }
 
     private void SetBulletCount(int value)

@@ -8,14 +8,11 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     public Vector3 movement;
-    private Vector3 spawnPosition;
-    [SerializeField] private float destroyDistance = 10f;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
 
     void Awake()
     {
-        spawnPosition = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -26,7 +23,7 @@ public class Bullet : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, -0.01f);*/
         rb.velocity = rb.velocity.normalized * speed;
 
-        if (Vector2.Distance(spawnPosition, transform.position) > destroyDistance)
+        if (transform.position.y < -5f)
         {
             Destroy();
         }
@@ -46,8 +43,12 @@ public class Bullet : MonoBehaviour
 
     private void Destroy()
     {
-        Gun.Balls--;
+        Launcher.Balls--;
         Destroy(gameObject);
     }
 
+    public void Impact(Block block)
+    {
+        block.Damage(1);
+    }
 }

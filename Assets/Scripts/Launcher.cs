@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : MonoBehaviour
+public class Launcher : MonoBehaviour
 {
     [SerializeField] private Camera camera;
     [SerializeField] private Bullet bulletPref;
@@ -13,6 +13,7 @@ public class Gun : MonoBehaviour
 
     [SerializeField] private int ballCount = 5;
     private LineRenderer lineRenderer;
+    private Vector2 launchVector = Vector2.up;
 
     private void Awake()
     {
@@ -22,18 +23,31 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        Vector3 cursorPos = camera.ScreenToWorldPoint(Input.mousePosition);
-        cursorPos.z = transform.position.z;
-        Vector3 vector = Vector3.Normalize(cursorPos - transform.position);
-        if (vector.y <= 0)
-            return;
-        
-        lineRenderer.SetPosition(1, vector * Vector3.Distance(transform.position, cursorPos));
+        Vector2 cursorPos = camera.ScreenToWorldPoint(Input.mousePosition);
+        launchVector = (cursorPos - (Vector2)transform.position).normalized;
 
-        if (Input.GetButtonDown("Fire1"))
+        float lineLenght = Mathf.Clamp(Vector3.Distance(transform.position, cursorPos), 2, 7);
+        lineRenderer.SetPosition(1, launchVector * lineLenght);
+
+        lineRenderer.forceRenderingOff = !Input.GetButton("Fire1");
+
+        if (CanShoot())
         {
-            StartCoroutine(Shoot(vector));
+            if (Input.GetButtonUp("Fire1"))
+                StartLaunch();
+
+            lineRenderer.endColor = Color.yellow;
         }
+        else
+        {
+
+            lineRenderer.endColor = Color.red;
+        }
+    }
+
+    private void StartLaunch()
+    {
+        StartCoroutine(Shoot(launchVector));
     }
 
     private IEnumerator Shoot(Vector3 vector)
@@ -52,5 +66,8 @@ public class Gun : MonoBehaviour
         bullet.SetMovement(vector);
         Balls++;
     }
+
+    private bool CanShoot() =>
+        launchVector.y > 0.3f;
 
 }

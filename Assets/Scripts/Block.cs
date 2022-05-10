@@ -40,11 +40,12 @@ public class Block : MonoBehaviour, IDamageable
 
     private void SetText(string text)
     {
-        //label.characterSize = 0.2f - 0.04f * text.Length;
+        float scale = 1.2f - (text.Length * 0.2f);
+        label.transform.localScale = new Vector3(scale, scale, 0f); ;
         label.text = text.ToString();
     }
 
-    private void Destroy()
+    public void Destroy()
     {
         Destroy(gameObject);
     }
@@ -56,6 +57,7 @@ public class Block : MonoBehaviour, IDamageable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Damage(1);
+        if (collision.collider.TryGetComponent(out Bullet bullet))
+            bullet.Impact(this);
     }
 }
