@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class LevelButton : MonoBehaviour
     [SerializeField]
     private Image[] stars;
     [SerializeField]
-    private Text label;
+    private TextMeshProUGUI label;
 
     private void Awake()
     {
