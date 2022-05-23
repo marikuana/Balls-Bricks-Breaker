@@ -10,6 +10,10 @@ public class UIController : MonoBehaviour
 
     public void RegenerateBricks()
     {
-        controller.RespawnBrick();
+    }
+
+    public void Pause()
+    {
+        controller.TogglePause();
     }
 }
