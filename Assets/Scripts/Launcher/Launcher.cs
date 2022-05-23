@@ -42,7 +42,14 @@ public class Launcher : MonoBehaviour
         for (int i = 0; i < ballCount; i++)
         {
             LaunchBall(vector);
-            yield return new WaitForSeconds(1f / bulletPerSecond);
+
+            float dealy = 0f;
+            while (dealy < 1f / bulletPerSecond)
+            {
+                if (!Controller.Instance.Pause)
+                    dealy += Time.deltaTime;
+                yield return null;
+            }
         }
         endShoot.Invoke();
     }
