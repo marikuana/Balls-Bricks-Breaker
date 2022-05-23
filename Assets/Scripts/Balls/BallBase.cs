@@ -10,6 +10,8 @@ public abstract class BallBase : MonoBehaviour
     private Rigidbody2D rb;
     public float Damage = 1f;
 
+    private Vector2 velocity = Vector2.zero;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -23,7 +25,13 @@ public abstract class BallBase : MonoBehaviour
 
     void Update()
     {
-        rb.velocity = rb.velocity.normalized * speed;
+        if (rb.velocity != Vector2.zero)
+            velocity = rb.velocity.normalized;
+
+        if (Controller.Instance.Pause)
+            rb.velocity = Vector2.zero;
+        else
+            rb.velocity = velocity * speed;
 
         if (transform.position.y < -5f)
         {

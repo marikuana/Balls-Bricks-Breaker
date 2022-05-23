@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaldBall : BallBase
+public class DefauldBall : BallBase
 {
     public override void Impact(Block block)
     {
