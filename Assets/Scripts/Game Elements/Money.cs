@@ -14,7 +14,7 @@ public class Money : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        controller.ProgressData.AddMoney(1);
+        Manager.Instance.ProgressData.AddMoney(1);
         Destroy(gameObject);
     }
 }
