@@ -17,10 +17,11 @@ public abstract class BallBase : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Initialize(Vector3 position, Vector3 movement)
+    public BallBase Initialize(Vector3 position, Vector3 movement)
     {
         transform.position = position;
         SetMovement(movement);
+        return this;
     }
 
     void Update()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,11 +9,15 @@ using UnityEngine.UI;
 public class StartApp : MonoBehaviour
 {
     [SerializeField]
-    private Text loadText;
+    private Manager manager;
+
+    [SerializeField]
+    private TextMeshProUGUI loadText;
     private int pointCount;
 
-    private void Start()
+    private void Awake()
     {
+        DontDestroyOnLoad(manager.gameObject);
         SceneManager.LoadScene("Main Menu");
         StartCoroutine(Loading());
     }

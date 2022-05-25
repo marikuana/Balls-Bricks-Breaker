@@ -1,53 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] 
-    private Controller controller;
-
     [SerializeField]
     private Text bulletCount;
     [SerializeField]
-    private Text moneyLabel;
+    private TextMeshProUGUI moneyLabel;
 
     [SerializeField]
-    private Button restartLevel;
+    private Stars stars;
     [SerializeField]
-    private Button pause;
-
-    private void Awake()
-    {
-        SetMoney(Manager.Instance.ProgressData.Money);
-        Manager.Instance.ProgressData.OnMoneyUpdate += SetMoney;
-    }
+    private Button menuButton;
+    [SerializeField]
+    private Menu menu;
 
     private void OnDestroy()
     {
         Manager.Instance.ProgressData.OnMoneyUpdate -= SetMoney;
+        Controller.Instance.OnStarChange -= stars.SetStars;
     }
 
     private void Start()
     {
-        restartLevel.onClick.AddListener(RestartLevel);
-        pause.onClick.AddListener(Pause);
+        menuButton.onClick.AddListener(ShowMenu);
+
+        SetMoney(Manager.Instance.ProgressData.Money);
+        Manager.Instance.ProgressData.OnMoneyUpdate += SetMoney;
+
+        Controller.Instance.OnStarChange += stars.SetStars;
     }
 
     private void Update()
     {
         SetBulletCount(Launcher.Balls);
-    }
-
-    public void RestartLevel()
-    {
-        controller.RestartLevel();
-    }
-
-    public void Pause()
-    {
-        controller.TogglePause();
     }
 
     private void SetBulletCount(int value)
@@ -59,4 +48,12 @@ public class UIController : MonoBehaviour
     {
         moneyLabel.text = money.ToString();
     }
+
+    private void ShowMenu()
+    {
+        menu.Toggle();
+    }
+
+    private void SetStars(int count) =>
+        stars.SetStars(count);
 }

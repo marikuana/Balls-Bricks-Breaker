@@ -6,6 +6,6 @@ public class MoneyBall : BallBase
 {
     public override void Impact(Block block)
     {
-        Controller.Instance.ProgressData.AddMoney(1);
+        Manager.Instance.ProgressData.AddMoney(1);
     }
 }

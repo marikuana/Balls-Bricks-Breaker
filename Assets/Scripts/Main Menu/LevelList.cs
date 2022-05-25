@@ -18,17 +18,20 @@ public class LevelList : MonoBehaviour
     private void Awake()
     {
         close.onClick.AddListener(OnClickClose);
+
+        float size = Screen.width / 9.6f;
+        content.GetComponent<GridLayoutGroup>().cellSize = new Vector2 (size, size);
     }
 
     private void Start()
     {
-        List<Level> levels = Resources.LoadAll<Level>("Level").ToList();
+        List<Level> levels = Manager.Instance.LevelManager.GetLevels();
 
-        for (int i = 1; i < 22; i++)
+        for (int i = 1; i <= levels.Count; i++)
         {
             LevelButton levelButton = Instantiate(pref, content);
             levelButton.gameObject.SetActive(true);
-            levelButton.Init(i, Random.Range(0, 3));
+            levelButton.Init(i, Manager.Instance.ProgressData.GetLevelStar(levels[i - 1].LevelId));
         }
     }
 

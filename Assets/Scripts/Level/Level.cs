@@ -4,12 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEditor;
 
 [CreateAssetMenu(fileName = "Level")]
 public class Level : ScriptableObject
 {
     [SerializeField]
-    public Block pref;
+    public string LevelId;
+    [SerializeField]
+    public Block Pref;
     [SerializeField]
     public List<LevelObjects> objects;
+
+    private void Awake()
+    {
+        LevelId = Guid.NewGuid().ToString();
+    }
 }

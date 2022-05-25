@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -24,7 +25,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-
+        SceneManager.LoadScene(2); // delete
     }
 
     public void ChooseLevel()

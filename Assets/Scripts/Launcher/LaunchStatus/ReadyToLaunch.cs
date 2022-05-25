@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ReadyToLaunch : LaunchStatus
 {
@@ -9,6 +10,9 @@ public class ReadyToLaunch : LaunchStatus
 
     public override void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         Vector2 cursorPos = launcher.camera.ScreenToWorldPoint(Input.mousePosition);
         launchVector = (cursorPos - (Vector2)launcher.transform.position).normalized;
 
