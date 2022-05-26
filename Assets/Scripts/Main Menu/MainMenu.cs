@@ -25,7 +25,8 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(2); // delete
+        new LevelLoader(Manager.Instance.LevelManager.GetLevels().Last())
+            .Load();
     }
 
     public void ChooseLevel()

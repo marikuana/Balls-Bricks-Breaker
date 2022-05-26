@@ -1,20 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Launcher : MonoBehaviour
 {
-    [SerializeField] public Camera camera;
-    [SerializeField] private BallBase bulletPref;
     [SerializeField] private float bulletPerSecond = 10f;
 
     public static int Balls = 0;
 
-    [SerializeField] private int ballCount = 5;
     private LineRenderer lineRenderer;
 
     public LaunchStatus status;
+
+    public event Action OnLaunchBall;
+
+    private List<BallBase> balls = new List<BallBase>();
+    private List<BallType> ballQuery = new List<BallType>();
+
+    [SerializeField]
+    private BallFactory ballFactory;
 
     private void Awake()
     {
@@ -26,22 +32,27 @@ public class Launcher : MonoBehaviour
         status = new ReadyToLaunch(this);
     }
 
-
     void Update()
     {
         status.Update();
     }
 
+    public void SetBalls(params BallType[] balls)
+    {
+        ballQuery = balls.ToList();
+    }
+
     public void StartLaunch(Vector2 launchVector, Action endShoot)
     {
         StartCoroutine(Shoot(launchVector, endShoot));
+        OnLaunchBall?.Invoke();
     }
 
     private IEnumerator Shoot(Vector3 vector, Action endShoot)
     {
-        for (int i = 0; i < ballCount; i++)
+        foreach (var ball in ballQuery)
         {
-            LaunchBall(vector);
+            LaunchBall(ball, vector);
 
             float dealy = 0f;
             while (dealy < 1f / bulletPerSecond)
@@ -54,9 +65,10 @@ public class Launcher : MonoBehaviour
         endShoot.Invoke();
     }
 
-    private void LaunchBall(Vector3 vector)
+    private void LaunchBall(BallType ballType, Vector3 vector)
     {
-        Instantiate(bulletPref).Initialize(transform.position, vector);
+        BallBase ball = Instantiate(ballFactory.GetBallPref(ballType), transform).Initialize(transform.position, vector);
+        balls.Add(ball);
         Balls++;
     }
 

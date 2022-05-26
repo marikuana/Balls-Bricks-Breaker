@@ -16,7 +16,7 @@ public class Level : ScriptableObject
     [SerializeField]
     public List<LevelObjects> objects;
     [SerializeField]
-    public List<BallType> balls;
+    public BallType[] balls;
 
     private void Awake()
     {

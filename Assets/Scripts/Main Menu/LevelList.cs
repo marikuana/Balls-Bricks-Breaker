@@ -31,7 +31,7 @@ public class LevelList : MonoBehaviour
         {
             LevelButton levelButton = Instantiate(pref, content);
             levelButton.gameObject.SetActive(true);
-            levelButton.Init(i, Manager.Instance.ProgressData.GetLevelStar(levels[i - 1].LevelId));
+            levelButton.Init(i, levels[i - 1]);
         }
     }
 

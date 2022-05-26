@@ -9,6 +9,9 @@ public class Controller : MonoBehaviour
 {
     public static Controller Instance { get; private set; }
 
+    [SerializeField]
+    private Launcher launcher;
+
     private Level currentLevel;
     private List<GameObject> levelObjects = new List<GameObject>();
 
@@ -20,31 +23,39 @@ public class Controller : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        currentLevel = Manager.Instance.LevelManager.GetLevels()[2];
-        SetStar(3);
+
+        launcher.OnLaunchBall += DecrementStar;
+    }
+
+    private void Destroy()
+    {
+        launcher.OnLaunchBall -= DecrementStar;
+    }
+
+    public void Init(Level level)
+    {
+        currentLevel = level;
+
+        RestartLevel();
     }
 
     public void RestartLevel()
     {
         LoadLevel(currentLevel);
-        SetStar(3);
+        SetStar(4);
+        launcher.SetBalls(currentLevel.balls);
     }
 
     public void SetStar(int count)
     {
-        star = count;
+        star = Mathf.Clamp(count, 0, 4);
         OnStarChange?.Invoke(star);
     }
 
-    [MenuItem("Tool/Dec")]
-    static void DecrementStar()
+    private void DecrementStar()
     {
-        Instance.SetStar(--Instance.star);
+        SetStar(--star);
     }
-
-    [MenuItem("Tool/Dec", true)]
-    static bool DecrementStarValidate() =>
-        Instance != null;
 
     public void LoadLevel(Level level)
     {
@@ -65,5 +76,6 @@ public class Controller : MonoBehaviour
             if (gameObject != null)
                 Destroy(gameObject);
         }
+        levelObjects.Clear();
     }
 }

@@ -42,6 +42,11 @@ public class ProgressData
         SaveLevelStars();
     }
 
+    public int GetLevelStar(Level level)
+    {
+        return GetLevelStar(level.LevelId);
+    }
+
     public int GetLevelStar(string levelId)
     {
         if (levelStars.ContainsKey(levelId))

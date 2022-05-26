@@ -15,20 +15,24 @@ public class LevelButton : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI label;
 
+    private Level level;
+
     private void Awake()
     {
         select.onClick.AddListener(SelectLevel);
     }
 
-    public void Init(int levelNumber, int starCount)
+    public void Init(int levelNumber, Level level)
     {
         SetNumber(levelNumber);
-        stars.SetStars(starCount);
+        stars.SetStars(Manager.Instance.ProgressData.GetLevelStar(level));
+        this.level = level;
     }
 
     private void SelectLevel()
     {
-        Debug.Log("Select level");
+        new LevelLoader(level)
+            .Load();
     }
 
     public void SetNumber(int number)

@@ -13,7 +13,7 @@ public class ReadyToLaunch : LaunchStatus
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        Vector2 cursorPos = launcher.camera.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         launchVector = (cursorPos - (Vector2)launcher.transform.position).normalized;
 
         float lineLenght = Mathf.Clamp(Vector3.Distance(launcher.transform.position, cursorPos), 2, 7);

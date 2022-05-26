@@ -235,10 +235,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbffe732a17c47041bbb273ec9b2eb19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 519420031}
   bulletPref: {fileID: 6990873902260067403, guid: 2cd62c75512c3374c9d378a4c3a0c5cf, type: 3}
   bulletPerSecond: 10
   ballCount: 5
+  ballFactory: {fileID: 11400000, guid: ada176cee5cd325418632fd5a4e5b616, type: 2}
 --- !u!4 &149284474
 Transform:
   m_ObjectHideFlags: 0
@@ -757,8 +757,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallPref: {fileID: 1000984374393199037, guid: a8ad61b8423b93641b365d2e4e7d95d4, type: 3}
-  position: {x: 0, y: -0.25, z: 0}
-  sizeOffset: {x: 0, y: -0.25, z: 0}
+  position: {x: 0, y: -0.3, z: 0}
+  sizeOffset: {x: 0, y: -0.3, z: 0}
 --- !u!1 &444833067
 GameObject:
   m_ObjectHideFlags: 0
@@ -2685,6 +2685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697be0869bc98aa4fa1901fceab18aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  launcher: {fileID: 149284472}
 --- !u!4 &1362189059
 Transform:
   m_ObjectHideFlags: 0
@@ -2710,7 +2711,6 @@ GameObject:
   - component: {fileID: 1389242349}
   - component: {fileID: 1389242352}
   - component: {fileID: 1389242351}
-  - component: {fileID: 1389242350}
   m_Layer: 5
   m_Name: Bullets
   m_TagString: Untagged
@@ -2737,18 +2737,6 @@ RectTransform:
   m_AnchoredPosition: {x: 70, y: -80}
   m_SizeDelta: {x: 100, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1389242350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389242348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc17f8bf01c63d443801461cb6c1b66e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1389242351
 MonoBehaviour:
   m_ObjectHideFlags: 0
