@@ -15,6 +15,8 @@ public class Level : ScriptableObject
     public Block Pref;
     [SerializeField]
     public List<LevelObjects> objects;
+    [SerializeField]
+    public List<BallType> balls;
 
     private void Awake()
     {
