@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Block : MonoBehaviour, IDamageable
+public class Block : MonoBehaviour
 {
     [SerializeField] public float health = 10f;
     private SpriteRenderer spriteRenderer;
     private TextMesh label;
-    [SerializeField] private Sprite[] sprites;
 
     private void Awake()
     {
