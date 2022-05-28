@@ -43,6 +43,7 @@ public class Menu : MonoBehaviour
     public void Restart()
     {
         Controller.Instance.RestartLevel();
+        Hide();
     }
 
     public void MainMenu()

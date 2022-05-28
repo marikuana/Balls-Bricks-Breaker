@@ -1,4 +1,6 @@
-﻿public class WaitBall : LaunchStatus
+﻿using System.Linq;
+
+public class WaitBall : LaunchStatus
 {
     public WaitBall(Launcher launcher) : base(launcher)
     {
@@ -6,7 +8,7 @@
 
     public override void Update()
     {
-        if (Launcher.Balls == 0)
+        if (launcher.GetLaunchedBall().Count() == 0)
             launcher.status = new ReadyToLaunch(launcher);
     }
 }

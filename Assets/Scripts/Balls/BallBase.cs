@@ -46,9 +46,8 @@ public abstract class BallBase : MonoBehaviour
         rb.AddForce(movement);
     }
 
-    protected void Destroy()
+    public void Destroy()
     {
-        Launcher.Balls--;
         Destroy(gameObject);
     }
 

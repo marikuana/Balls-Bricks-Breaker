@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Manager : MonoBehaviour
@@ -15,5 +16,11 @@ public class Manager : MonoBehaviour
         Instance = this;
         ProgressData = new ProgressData();
         LevelManager = new LevelManager();
+    }
+
+    public Level GetLastLevel()
+    {
+        return LevelManager.GetLevels().FirstOrDefault(level => !ProgressData.IsLevelComplite(level)) ?? 
+            LevelManager.GetLevels().Last();
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager
 {
-    public List<Level> levels = new List<Level>();
+    private List<Level> levels = new List<Level>();
 
     public LevelManager()
     {
@@ -14,4 +14,12 @@ public class LevelManager
     }
 
     public List<Level> GetLevels() => levels;
+
+    public Level GetNextLevel(Level level)
+    {
+        int index = levels.FindIndex(f => f.LevelId == level.LevelId);
+        if (index + 1 >= levels.Count || index == -1)
+            return levels[index];
+        return levels[index + 1];
+    }
 }

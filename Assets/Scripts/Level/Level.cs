@@ -12,9 +12,9 @@ public class Level : ScriptableObject
     [SerializeField]
     public string LevelId;
     [SerializeField]
-    public Block Pref;
+    public Block BlockPref;
     [SerializeField]
-    public List<LevelObjects> objects;
+    public List<LevelBlocks> Blocks;
     [SerializeField]
     public BallType[] balls;
 

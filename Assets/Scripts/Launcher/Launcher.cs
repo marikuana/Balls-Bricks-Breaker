@@ -42,6 +42,18 @@ public class Launcher : MonoBehaviour
         ballQuery = balls.ToList();
     }
 
+    public IEnumerable<BallBase> GetLaunchedBall()
+    {
+        return balls.Where(ball => ball != null);
+    }
+
+    public void DestroyLaunchedBall()
+    {
+        foreach (var ball in balls.Where(b => b != null))
+            ball.Destroy();
+        balls.Clear();
+    }
+
     public void StartLaunch(Vector2 launchVector, Action endShoot)
     {
         StartCoroutine(Shoot(launchVector, endShoot));
@@ -69,7 +81,6 @@ public class Launcher : MonoBehaviour
     {
         BallBase ball = Instantiate(ballFactory.GetBallPref(ballType), transform).Initialize(transform.position, vector);
         balls.Add(ball);
-        Balls++;
     }
 
     public void RenderLine(bool visible) =>

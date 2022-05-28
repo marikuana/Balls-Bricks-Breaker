@@ -235,9 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbffe732a17c47041bbb273ec9b2eb19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPref: {fileID: 6990873902260067403, guid: 2cd62c75512c3374c9d378a4c3a0c5cf, type: 3}
   bulletPerSecond: 10
-  ballCount: 5
   ballFactory: {fileID: 11400000, guid: ada176cee5cd325418632fd5a4e5b616, type: 2}
 --- !u!4 &149284474
 Transform:
@@ -2071,7 +2069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1072902006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2301,7 +2299,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.85
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

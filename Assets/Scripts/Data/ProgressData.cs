@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,19 +7,15 @@ using UnityEngine;
 public class ProgressData
 {
     public int Money { get; private set; }
-    public int Balls { get; private set; }
 
     private Dictionary<string, int> levelStars;
 
     public event Action<int> OnMoneyUpdate; 
 
-    public event Action<int> OnBallsUpdate;
-
     public ProgressData()
     {
         Money = PlayerPrefs.GetInt("money", 0);
-        Balls = PlayerPrefs.GetInt("balls", 5);
-        levelStars = JsonUtility.FromJson<Dictionary<string, int>>(PlayerPrefs.GetString("levelProgress", "{}"));
+        levelStars = Deserialize<Dictionary<string, int>>(PlayerPrefs.GetString("levelProgress", "{}"));
     }
 
     private void SetMoney(int money)
@@ -31,6 +28,11 @@ public class ProgressData
     public void AddMoney(int money)
     {
         SetMoney(money + Money);
+    }
+
+    public void SetLevelStar(Level level, int star)
+    {
+        SetLevelStar(level.LevelId, star);
     }
 
     public void SetLevelStar(string levelId, int star)
@@ -54,9 +56,11 @@ public class ProgressData
         return 0;
     }
 
+    public bool IsLevelComplite(Level level) =>
+        levelStars.ContainsKey(level.LevelId);
+
     public void Save()
     {
-        SaveBalls();
         SaveMoney();
         SaveLevelStars();
     }
@@ -64,9 +68,15 @@ public class ProgressData
     private void SaveMoney() =>
         PlayerPrefs.SetInt("money", Money);
 
-    private void SaveBalls() =>
-        PlayerPrefs.SetInt("balls", Balls);
+    private void SaveLevelStars()
+    {
+        string json = Serialize(levelStars);
+        PlayerPrefs.SetString("levelProgress", json);
+    }
 
-    private void SaveLevelStars() =>
-        PlayerPrefs.SetString("levelProgress", JsonUtility.ToJson(levelStars));
+    private string Serialize(object obj) =>
+        JsonConvert.SerializeObject(obj);
+
+    private T Deserialize<T>(string json) =>
+        JsonConvert.DeserializeObject<T>(json);
 }

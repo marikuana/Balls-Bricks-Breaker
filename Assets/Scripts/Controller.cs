@@ -13,7 +13,7 @@ public class Controller : MonoBehaviour
     private Launcher launcher;
 
     private Level currentLevel;
-    private List<GameObject> levelObjects = new List<GameObject>();
+    private List<Block> levelOBlocks = new List<Block>();
 
     private int star;
     public event Action<int> OnStarChange;
@@ -32,6 +32,23 @@ public class Controller : MonoBehaviour
         launcher.OnLaunchBall -= DecrementStar;
     }
 
+    private void Update()
+    {
+        if (currentLevel == null)
+            return;
+
+        if (levelOBlocks.Where(block => block != null).Count() == 0)
+            CompleteLevel();
+    }
+
+    private void CompleteLevel()
+    {
+        if (Manager.Instance.ProgressData.GetLevelStar(currentLevel) < star)
+            Manager.Instance.ProgressData.SetLevelStar(currentLevel, star);
+
+        Init(Manager.Instance.LevelManager.GetNextLevel(currentLevel));
+    }
+
     public void Init(Level level)
     {
         currentLevel = level;
@@ -44,6 +61,7 @@ public class Controller : MonoBehaviour
         LoadLevel(currentLevel);
         SetStar(4);
         launcher.SetBalls(currentLevel.balls);
+        launcher.DestroyLaunchedBall();
     }
 
     public void SetStar(int count)
@@ -61,21 +79,21 @@ public class Controller : MonoBehaviour
     {
         UnloadLevel();
 
-        foreach (var obj in level.objects)
+        foreach (var obj in level.Blocks)
         {
-            GameObject gameObject = Instantiate(level.Pref).gameObject;
-            gameObject.transform.position = obj.Position;
-            levelObjects.Add(gameObject);
+            Block block = Instantiate(level.BlockPref).Init(obj.Heath);
+            block.transform.position = obj.Position;
+            levelOBlocks.Add(block);
         }
     }
 
     public void UnloadLevel()
     {
-        foreach (var gameObject in levelObjects.ToList())
+        foreach (var block in levelOBlocks.ToList())
         {
-            if (gameObject != null)
-                Destroy(gameObject);
+            if (block != null)
+                Destroy(block.gameObject);
         }
-        levelObjects.Clear();
+        levelOBlocks.Clear();
     }
 }

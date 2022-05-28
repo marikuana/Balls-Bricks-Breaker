@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b583f657811f049b8dc5dab44ac87f, type: 3}
   m_Name: Level 2
   m_EditorClassIdentifier: 
-  LevelId: 8959a93b-9917-42b0-9648-9031c5928ee1
-  Pref: {fileID: 353927987599052630, guid: 6503302d77c35e14396569ca7f5ce25b, type: 3}
-  objects:
+  LevelId: f9f4e8ce-395d-4ae8-9e79-25d53a38a06a
+  BlockPref: {fileID: 353927987599052630, guid: 6503302d77c35e14396569ca7f5ce25b, type: 3}
+  Blocks:
   - Position: {x: -2, y: 0}
+    Heath: 7
   - Position: {x: 2, y: 0}
-  balls: 0000000000000000000000000000000000000000
+    Heath: 7
+  balls: 000000000000000002000000000000000000000002000000
