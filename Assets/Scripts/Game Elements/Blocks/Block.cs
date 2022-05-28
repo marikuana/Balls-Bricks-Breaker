@@ -19,7 +19,12 @@ public class Block : MonoBehaviour, IDamageable
     private void Start()
     {
         SetText(health.ToString());
-        spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+    }
+
+    public Block Init(Sprite sprite)
+    {
+        spriteRenderer.sprite = sprite;
+        return this;
     }
 
     public void Damage(float value)
@@ -32,7 +37,12 @@ public class Block : MonoBehaviour, IDamageable
     public bool Alive => 
         health > 0;
 
-    private void SetHealth(float value)
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
+    }
+
+    public void SetHealth(float value)
     {
         SetText(value.ToString());
         health = value;
@@ -48,11 +58,6 @@ public class Block : MonoBehaviour, IDamageable
     public void Destroy()
     {
         Destroy(gameObject);
-    }
-
-    public void SetColor(Color color)
-    {
-        spriteRenderer.color = color;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

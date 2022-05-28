@@ -12,7 +12,7 @@ public class Level : ScriptableObject
     [SerializeField]
     public string LevelId;
     [SerializeField]
-    public Block BlockPref;
+    public BaseBlockFactory BlockFactory;
     [SerializeField]
     public List<LevelBlocks> Blocks;
     [SerializeField]

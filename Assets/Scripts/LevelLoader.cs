@@ -21,7 +21,7 @@ public class LevelLoader
 
         Scene scene = SceneManager.GetSceneByBuildIndex(2);
         Controller controller = GetController(scene.GetRootGameObjects());
-        controller.Init(level);
+        controller.Initialize(level);
     }
 
     private Controller GetController(GameObject[] gameObjects)

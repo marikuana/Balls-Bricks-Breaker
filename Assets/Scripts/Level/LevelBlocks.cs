@@ -10,5 +10,6 @@ public class LevelBlocks
 {
     public Vector2 Position;
     public int Heath;
+    public BlockType Type;
 }
 

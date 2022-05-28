@@ -46,10 +46,10 @@ public class Controller : MonoBehaviour
         if (Manager.Instance.ProgressData.GetLevelStar(currentLevel) < star)
             Manager.Instance.ProgressData.SetLevelStar(currentLevel, star);
 
-        Init(Manager.Instance.LevelManager.GetNextLevel(currentLevel));
+        Initialize(Manager.Instance.LevelManager.GetNextLevel(currentLevel));
     }
 
-    public void Init(Level level)
+    public void Initialize(Level level)
     {
         currentLevel = level;
 
@@ -81,8 +81,9 @@ public class Controller : MonoBehaviour
 
         foreach (var obj in level.Blocks)
         {
-            Block block = Instantiate(level.BlockPref).Init(obj.Heath);
-            block.transform.position = obj.Position;
+            Block block = level.BlockFactory.Get(obj.Type);
+            block.SetHealth(obj.Heath);
+            block.SetPosition(obj.Position);
             levelOBlocks.Add(block);
         }
     }

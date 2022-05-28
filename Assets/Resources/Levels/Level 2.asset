@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b583f657811f049b8dc5dab44ac87f, type: 3}
   m_Name: Level 2
   m_EditorClassIdentifier: 
-  LevelId: f9f4e8ce-395d-4ae8-9e79-25d53a38a06a
-  BlockPref: {fileID: 353927987599052630, guid: 6503302d77c35e14396569ca7f5ce25b, type: 3}
+  LevelId: 62e2833a-c2a2-4083-93e1-a305cfbb1d67
+  BlockFactory: {fileID: 11400000, guid: 7e85fbeba15f63b49add24f7d402c65e, type: 2}
   Blocks:
   - Position: {x: -2, y: 0}
     Heath: 7

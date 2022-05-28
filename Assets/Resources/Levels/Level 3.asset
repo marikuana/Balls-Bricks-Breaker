@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b583f657811f049b8dc5dab44ac87f, type: 3}
   m_Name: Level 3
   m_EditorClassIdentifier: 
-  LevelId: d9cb8309-f9a6-4563-9335-7c1a3bbf919b
-  BlockPref: {fileID: 353927987599052630, guid: 6503302d77c35e14396569ca7f5ce25b, type: 3}
+  LevelId: 6b7e22b7-d18f-4489-b3dc-8cb2e10f73f6
+  BlockFactory: {fileID: 11400000, guid: 176a2e4cbe1e24540a623a4658b024a9, type: 2}
   Blocks:
   - Position: {x: -2, y: -1}
     Heath: 10
+    Type: 0
   - Position: {x: 2, y: -1}
     Heath: 10
+    Type: 0
   - Position: {x: 0, y: 2}
     Heath: 5
+    Type: 3
   balls: 000000000000000000000000000000000200000001000000

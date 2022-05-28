@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa8e7ac8f369bd54381e2beeb07762e6, type: 3}
+  m_Name: Default Block Factory
+  m_EditorClassIdentifier: 
+  pref: {fileID: 353927987599052630, guid: 6503302d77c35e14396569ca7f5ce25b, type: 3}
+  green: {fileID: 7499154508442906066, guid: 93d42270db1739f479a4618fbb306844, type: 3}
+  orange: {fileID: -4751441601245812612, guid: 93d42270db1739f479a4618fbb306844, type: 3}
+  blue: {fileID: -7350702553791306765, guid: 93d42270db1739f479a4618fbb306844, type: 3}
+  red: {fileID: 1090193005561696298, guid: 93d42270db1739f479a4618fbb306844, type: 3}

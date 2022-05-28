@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "BallFactory")]
+[CreateAssetMenu(menuName = "Factories/Ball Factory")]
 public class BallFactory : ScriptableObject
 {
     [SerializeField]
