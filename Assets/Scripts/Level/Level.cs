@@ -20,6 +20,7 @@ public class Level : ScriptableObject
 
     private void Awake()
     {
-        LevelId = Guid.NewGuid().ToString();
+        if (string.IsNullOrEmpty(LevelId))
+            LevelId = Guid.NewGuid().ToString();
     }
 }
