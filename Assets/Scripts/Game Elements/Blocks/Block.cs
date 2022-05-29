@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    [SerializeField] public float health = 10f;
+    [SerializeField] 
+    public float health = 10f;
     private SpriteRenderer spriteRenderer;
-    private TextMesh label;
+    [SerializeField]
+    private TextMeshPro label;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();    
-        label = GetComponentInChildren<TextMesh>();
     }
 
     private void Start()
@@ -49,8 +51,6 @@ public class Block : MonoBehaviour
 
     private void SetText(string text)
     {
-        float scale = 1.2f - (text.Length * 0.2f);
-        label.transform.localScale = new Vector3(scale, scale, 0f); ;
         label.text = text.ToString();
     }
 
