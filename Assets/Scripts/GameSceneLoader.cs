@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelLoader
+public class GameSceneLoader
 {
     private Level level;
 
-    public LevelLoader(Level level)
+    public GameSceneLoader(Level level)
     {
         this.level = level;
     }
@@ -20,15 +20,15 @@ public class LevelLoader
             await Task.Delay(1);
 
         Scene scene = SceneManager.GetSceneByBuildIndex(2);
-        Controller controller = GetController(scene.GetRootGameObjects());
+        Controller controller = GetRoot<Controller>(scene.GetRootGameObjects());
         controller.Initialize(level);
     }
 
-    private Controller GetController(GameObject[] gameObjects)
+    private T GetRoot<T>(GameObject[] gameObjects) where T : MonoBehaviour
     {
         foreach (var obj in gameObjects)
         {
-            if (obj.TryGetComponent(out Controller controller))
+            if (obj.TryGetComponent(out T controller))
                 return controller;
         }
         return null;

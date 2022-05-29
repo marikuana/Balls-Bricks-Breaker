@@ -31,7 +31,7 @@ public class LevelButton : MonoBehaviour
 
     private void SelectLevel()
     {
-        new LevelLoader(level)
+        new GameSceneLoader(level)
             .Load();
     }
 
