@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Launcher : MonoBehaviour
 {
-    [SerializeField] private float bulletPerSecond = 10f;
+    [SerializeField] public float bulletPerSecond = 10f;
 
     public static int Balls = 0;
 
@@ -16,7 +16,6 @@ public class Launcher : MonoBehaviour
 
     public event Action OnLaunchBall;
 
-    private List<BallBase> balls = new List<BallBase>();
     private List<BallType> ballQuery = new List<BallType>();
 
     [SerializeField]
@@ -32,55 +31,30 @@ public class Launcher : MonoBehaviour
         status = new ReadyToLaunch(this);
     }
 
-    void Update()
+    private void Update()
     {
         status.Update();
     }
 
-    public void SetBalls(params BallType[] balls)
-    {
+    public IEnumerable<BallType> GetBalls() =>
+        ballQuery.ToList();
+
+    public void SetBalls(params BallType[] balls) =>
         ballQuery = balls.ToList();
-    }
 
-    public IEnumerable<BallBase> GetLaunchedBall()
+    public void LaunchBall()
     {
-        return balls.Where(ball => ball != null);
-    }
-
-    public void DestroyLaunchedBall()
-    {
-        foreach (var ball in balls.Where(b => b != null))
-            ball.Destroy();
-        balls.Clear();
-    }
-
-    public void StartLaunch(Vector2 launchVector, Action endShoot)
-    {
-        StartCoroutine(Shoot(launchVector, endShoot));
         OnLaunchBall?.Invoke();
     }
 
-    private IEnumerator Shoot(Vector3 vector, Action endShoot)
+    public void Restart()
     {
-        foreach (var ball in ballQuery)
-        {
-            LaunchBall(ball, vector);
-
-            float dealy = 0f;
-            while (dealy < 1f / bulletPerSecond)
-            {
-                if (!Controller.Instance.Pause)
-                    dealy += Time.deltaTime;
-                yield return null;
-            }
-        }
-        endShoot.Invoke();
+        status.Restart();
     }
 
-    private void LaunchBall(BallType ballType, Vector3 vector)
+    public BallBase LaunchBall(BallType ballType, Vector3 vector)
     {
-        BallBase ball = Instantiate(ballFactory.GetBallPref(ballType), transform).Initialize(transform.position, vector);
-        balls.Add(ball);
+        return Instantiate(ballFactory.GetBallPref(ballType), transform).Initialize(transform.position, vector);
     }
 
     public void RenderLine(bool visible) =>

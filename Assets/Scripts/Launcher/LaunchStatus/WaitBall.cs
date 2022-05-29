@@ -1,14 +1,27 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 public class WaitBall : LaunchStatus
 {
-    public WaitBall(Launcher launcher) : base(launcher)
+    private IEnumerable<BallBase> balls;
+
+    public WaitBall(Launcher launcher, List<BallBase> balls) : base(launcher)
     {
+        this.balls = balls;
     }
 
     public override void Update()
     {
-        if (launcher.GetLaunchedBall().Count() == 0)
+        if (balls.Where(ball => ball != null).Count() == 0)
             launcher.status = new ReadyToLaunch(launcher);
+    }
+
+    public override void Restart()
+    {
+        foreach (var ball in balls.ToList())
+        {
+            if (ball != null)
+                ball.Destroy();
+        }
     }
 }

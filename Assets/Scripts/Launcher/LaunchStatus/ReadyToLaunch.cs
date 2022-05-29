@@ -8,9 +8,10 @@ public class ReadyToLaunch : LaunchStatus
     {
     }
 
+
     public override void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
+        if ((Input.GetButton("Fire1") || Input.GetButtonUp("Fire1")) && EventSystem.current.IsPointerOverGameObject())
             return;
 
         Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -19,12 +20,13 @@ public class ReadyToLaunch : LaunchStatus
         float lineLenght = Mathf.Clamp(Vector3.Distance(launcher.transform.position, cursorPos), 2, 7);
         launcher.SetLinePoistion(launchVector * lineLenght);
 
+
         launcher.RenderLine(Input.GetButton("Fire1"));
 
         if (CanShoot())
         {
             if (Input.GetButtonUp("Fire1"))
-                launcher.status = new StartLaunch(launcher, launchVector);
+                launcher.status = new Launch(launcher, launchVector);
             launcher.SetLineColor(Color.yellow);
         }
         else
@@ -33,4 +35,9 @@ public class ReadyToLaunch : LaunchStatus
 
     private bool CanShoot() =>
         launchVector.y > 0.3f;
+
+    public override void Restart()
+    {
+
+    }
 }

@@ -52,7 +52,7 @@ public class Controller : MonoBehaviour
     public void Initialize(Level level)
     {
         currentLevel = level;
-
+        launcher.SetBalls(currentLevel.balls);
         RestartLevel();
     }
 
@@ -60,8 +60,8 @@ public class Controller : MonoBehaviour
     {
         LoadLevel(currentLevel);
         SetStar(4);
-        launcher.SetBalls(currentLevel.balls);
-        launcher.DestroyLaunchedBall();
+        
+        launcher.Restart();
     }
 
     public void SetStar(int count)
