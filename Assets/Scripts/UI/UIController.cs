@@ -36,7 +36,7 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
-        SetBulletCount(Launcher.Balls);
+        SetBulletCount(0);
     }
 
     private void SetBulletCount(int value)

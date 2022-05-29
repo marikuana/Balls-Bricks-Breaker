@@ -8,8 +8,6 @@ public class Launcher : MonoBehaviour
 {
     [SerializeField] public float bulletPerSecond = 10f;
 
-    public static int Balls = 0;
-
     private LineRenderer lineRenderer;
 
     public LaunchStatus status;
