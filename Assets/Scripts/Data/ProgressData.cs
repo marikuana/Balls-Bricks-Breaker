@@ -70,8 +70,7 @@ public class ProgressData
 
     private void SaveLevelStars()
     {
-        string json = Serialize(levelStars);
-        PlayerPrefs.SetString("levelProgress", json);
+        PlayerPrefs.SetString("levelProgress", Serialize(levelStars));
     }
 
     private string Serialize(object obj) =>
