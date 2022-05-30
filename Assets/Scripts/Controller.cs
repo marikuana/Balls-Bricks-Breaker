@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
     private int star;
     public event Action<int> OnStarChange;
 
-    public bool Pause { get; set; } = false;
+    public float SimulateSpeed = 1f;
 
     private void Awake()
     {

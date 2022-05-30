@@ -41,8 +41,7 @@ public class Launch : LaunchStatus
             float dealy = 0f;
             while (dealy < 1f / launcher.bulletPerSecond)
             {
-                if (!Controller.Instance.Pause)
-                    dealy += Time.deltaTime;
+                dealy += Time.deltaTime * Controller.Instance.SimulateSpeed;
                 yield return null;
             }
         }

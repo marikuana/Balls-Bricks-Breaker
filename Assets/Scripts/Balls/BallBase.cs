@@ -29,10 +29,7 @@ public abstract class BallBase : MonoBehaviour
         if (rb.velocity != Vector2.zero)
             velocity = rb.velocity.normalized;
 
-        if (Controller.Instance.Pause)
-            rb.velocity = Vector2.zero;
-        else
-            rb.velocity = velocity * speed;
+        rb.velocity = velocity * speed * Controller.Instance.SimulateSpeed;
 
         if (transform.position.y < -5f)
         {
