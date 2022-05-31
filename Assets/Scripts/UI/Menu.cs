@@ -30,13 +30,13 @@ public class Menu : MonoBehaviour
 
     public void Show()
     {
-        Controller.Instance.SimulateSpeed = 0f;
+        Controller.Instance.SetPause(true);
         gameObject.SetActive(true);
     }
 
     public void Hide()
     {
-        Controller.Instance.SimulateSpeed = 1f;
+        Controller.Instance.SetPause(false);
         gameObject.SetActive(false);
     }
 

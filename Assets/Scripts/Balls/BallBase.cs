@@ -26,7 +26,7 @@ public abstract class BallBase : MonoBehaviour
 
     void Update()
     {
-        if (rb.velocity != Vector2.zero)
+        if (rb.velocity.normalized != Vector2.zero)
             velocity = rb.velocity.normalized;
 
         rb.velocity = velocity * speed * Controller.Instance.SimulateSpeed;
@@ -40,7 +40,7 @@ public abstract class BallBase : MonoBehaviour
     public void SetMovement(Vector3 movement)
     {
         rb.velocity = new Vector2();
-        rb.AddForce(movement);
+        rb.AddForce(movement * speed * Controller.Instance.SimulateSpeed, ForceMode2D.Impulse);
     }
 
     public void Destroy()

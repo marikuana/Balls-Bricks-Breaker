@@ -18,7 +18,12 @@ public class Controller : MonoBehaviour
     private int star;
     public event Action<int> OnStarChange;
 
-    public float SimulateSpeed = 1f;
+    [SerializeField]
+    private float simulateSpeed = 1f;
+    [SerializeField]
+    private bool pause = false;
+
+    public float SimulateSpeed => pause ? 0f : simulateSpeed;
 
     private void Awake()
     {
@@ -68,6 +73,16 @@ public class Controller : MonoBehaviour
     {
         star = Mathf.Clamp(count, 0, 4);
         OnStarChange?.Invoke(star);
+    }
+
+    public void SetPause(bool pause)
+    {
+        this.pause = pause;
+    }
+
+    public void SetSimulationSpeed(float speed)
+    {
+        simulateSpeed = speed;
     }
 
     private void DecrementStar()

@@ -755,8 +755,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallPref: {fileID: 1000984374393199037, guid: a8ad61b8423b93641b365d2e4e7d95d4, type: 3}
-  position: {x: 0, y: -0.3, z: 0}
-  sizeOffset: {x: 0, y: -0.3, z: 0}
+  position: {x: 0, y: 0, z: 0}
+  sizeOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &444833067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,7 +1382,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 57.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2299,7 +2299,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.85
+  m_fontSize: 85.9
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
