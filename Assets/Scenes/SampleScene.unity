@@ -293,7 +293,7 @@ LineRenderer:
   m_SortingOrder: 2
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: -0.28993517, y: 1.86, z: 1}
+  - {x: -0.032730438, y: 2.551829, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.05
@@ -755,8 +755,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallPref: {fileID: 1000984374393199037, guid: a8ad61b8423b93641b365d2e4e7d95d4, type: 3}
-  position: {x: 0, y: 0, z: 0}
-  sizeOffset: {x: 0, y: 0, z: 0}
+  position: {x: 0, y: -0.3, z: 0}
+  sizeOffset: {x: 0, y: -0.3, z: 0}
 --- !u!1 &444833067
 GameObject:
   m_ObjectHideFlags: 0
@@ -2684,7 +2684,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launcher: {fileID: 149284472}
-  SimulateSpeed: 1
+  simulateSpeed: 1
+  pause: 0
 --- !u!4 &1362189059
 Transform:
   m_ObjectHideFlags: 0

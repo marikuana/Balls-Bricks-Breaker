@@ -29,6 +29,9 @@ public abstract class BallBase : MonoBehaviour
         if (rb.velocity.normalized != Vector2.zero)
             velocity = rb.velocity.normalized;
 
+        if (velocity.y == 0f)
+            velocity = new Vector2(velocity.x, Random.Range(0f, velocity.x / 2f)).normalized;
+
         rb.velocity = velocity * speed * Controller.Instance.SimulateSpeed;
 
         if (transform.position.y < -5f)
