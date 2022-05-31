@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Manager : MonoBehaviour
+public class Manager
 {
-    public static Manager Instance { get; private set; }
-
+    public static Manager Instance 
+    { 
+        get 
+        { 
+            if (instance == null) 
+                instance = new Manager();
+            return instance;
+        } 
+    }
+    private static Manager instance;
     public ProgressData ProgressData { get; private set; }
 
     public LevelManager LevelManager { get; private set; }
 
-    private void Awake()
+    private Manager()
     {
-        Instance = this;
+        instance = this;
         ProgressData = new ProgressData();
         LevelManager = new LevelManager();
     }

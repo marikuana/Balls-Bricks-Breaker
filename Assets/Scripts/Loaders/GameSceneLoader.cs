@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameSceneLoader
+public class GameSceneLoader : ILoader
 {
     private Level level;
 
@@ -13,15 +13,16 @@ public class GameSceneLoader
         this.level = level;
     }
 
-    public async void Load()
+    public async Task Load()
     {
-        var loadScene = SceneManager.LoadSceneAsync(2);
+        var loadScene = SceneManager.LoadSceneAsync(Scenes.Game);
         while (!loadScene.isDone)
             await Task.Delay(1);
 
-        Scene scene = SceneManager.GetSceneByBuildIndex(2);
+        Scene scene = SceneManager.GetSceneByName(Scenes.Game);
         Controller controller = GetRoot<Controller>(scene.GetRootGameObjects());
         controller.Initialize(level);
+        return;
     }
 
     private T GetRoot<T>(GameObject[] gameObjects) where T : MonoBehaviour

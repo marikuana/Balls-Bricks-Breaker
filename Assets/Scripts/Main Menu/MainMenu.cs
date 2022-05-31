@@ -25,8 +25,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        new GameSceneLoader(Manager.Instance.GetLastLevel())
-            .Load();
+        LoadScreen.Instance.Load(new GameSceneLoader(Manager.Instance.GetLastLevel()));
     }
 
     public void ChooseLevel()

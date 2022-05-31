@@ -31,8 +31,7 @@ public class LevelButton : MonoBehaviour
 
     private void SelectLevel()
     {
-        new GameSceneLoader(level)
-            .Load();
+        LoadScreen.Instance.Load(new GameSceneLoader(level));
     }
 
     public void SetNumber(int number)
