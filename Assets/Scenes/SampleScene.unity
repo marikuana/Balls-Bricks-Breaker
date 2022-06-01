@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbffe732a17c47041bbb273ec9b2eb19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPerSecond: 10
+  bulletPerSecond: 20
   ballFactory: {fileID: 11400000, guid: ada176cee5cd325418632fd5a4e5b616, type: 2}
 --- !u!4 &149284474
 Transform:
@@ -603,6 +603,7 @@ MonoBehaviour:
   wallPref: {fileID: 1000984374393199037, guid: a8ad61b8423b93641b365d2e4e7d95d4, type: 3}
   position: {x: 0, y: -0.3, z: 0}
   sizeOffset: {x: 0, y: -0.3, z: 0}
+  wigth: 1
 --- !u!1 &444833067
 GameObject:
   m_ObjectHideFlags: 0

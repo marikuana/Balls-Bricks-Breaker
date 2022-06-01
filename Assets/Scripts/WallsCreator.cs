@@ -11,6 +11,8 @@ public class WallsCreator : MonoBehaviour
     private Vector3 position = Vector3.zero;
     [SerializeField]
     private Vector3 sizeOffset = Vector3.zero;
+    [SerializeField]
+    private float wigth = 1f;
 
     private void Awake()
     {
@@ -29,9 +31,9 @@ public class WallsCreator : MonoBehaviour
 
         return new List<Tuple<Vector3, Vector3>>
         {
-            new Tuple<Vector3, Vector3>(position + new Vector3(size.x, 0, 0), new Vector3(0.1f, size.y * 2f, 0)),
-            new Tuple<Vector3, Vector3>(position + new Vector3(-size.x, 0, 0), new Vector3(0.1f, size.y * 2f, 0)),
-            new Tuple<Vector3, Vector3>(position + new Vector3(0, size.y, 0), new Vector3(size.x * 2f, 0.1f, 0))
+            new Tuple<Vector3, Vector3>(position + new Vector3(size.x + (wigth / 2f), 0, 0), new Vector3(wigth, size.y * 2f, 0)),
+            new Tuple<Vector3, Vector3>(position + new Vector3(-size.x - (wigth / 2f), 0, 0), new Vector3(wigth, size.y * 2f, 0)),
+            new Tuple<Vector3, Vector3>(position + new Vector3(0, size.y + (wigth /2f), 0), new Vector3(size.x * 2f + wigth * 2f, wigth, 0))
         };
     }
 
