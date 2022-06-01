@@ -23,13 +23,13 @@ public class LoadScreen : MonoBehaviour
     public async void Load(params ILoader[] loaders)
     {
         canvas.enabled = true;
-        StartCoroutine(Loading());
+        Coroutine coroutine = StartCoroutine(Loading());
 
         foreach (var loader in loaders)
             await loader.Load();
 
         canvas.enabled = false;
-        StopCoroutine(Loading());
+        StopCoroutine(coroutine);
     }
 
     private IEnumerator Loading()
