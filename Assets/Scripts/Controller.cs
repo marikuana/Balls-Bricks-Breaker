@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
     private int star;
     public event Action<int> OnStarChange;
 
-    [SerializeField]
+    [SerializeField, Range(0, 10)]
     private float simulateSpeed = 1f;
     [SerializeField]
     private bool pause = false;

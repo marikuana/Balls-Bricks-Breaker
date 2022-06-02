@@ -6,15 +6,17 @@ using UnityEngine;
 
 public abstract class BallBase : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    [SerializeField] public float speed = 5f;
     private Rigidbody2D rb;
     public float Damage = 1f;
 
-    private Vector2 velocity = Vector2.zero;
+    public Vector2 velocity = Vector2.zero;
+    public PhysicBase Physic;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        //rb = GetComponent<Rigidbody2D>();
+        Physic = new Physic(this);
     }
 
     public BallBase Initialize(Vector3 position, Vector3 movement)
@@ -26,13 +28,14 @@ public abstract class BallBase : MonoBehaviour
 
     void Update()
     {
-        if (rb.velocity.normalized != Vector2.zero)
+        /*if (rb.velocity.normalized != Vector2.zero)
             velocity = rb.velocity.normalized;
 
         if (velocity.y == 0f)
             velocity = new Vector2(velocity.x, Random.Range(0f, velocity.x / 2f)).normalized;
 
-        rb.velocity = velocity * speed * Controller.Instance.SimulateSpeed;
+        rb.velocity = velocity * speed * Controller.Instance.SimulateSpeed;*/
+        transform.position = Physic.CalculatePosition();
 
         if (transform.position.y < -5f)
         {
@@ -42,8 +45,9 @@ public abstract class BallBase : MonoBehaviour
 
     public void SetMovement(Vector3 movement)
     {
-        rb.velocity = new Vector2();
-        rb.AddForce(movement * speed * Controller.Instance.SimulateSpeed, ForceMode2D.Impulse);
+        velocity = movement;
+        //rb.velocity = new Vector2();
+        //rb.AddForce(movement * speed * Controller.Instance.SimulateSpeed, ForceMode2D.Impulse);
     }
 
     public void Destroy()

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5336889706965334043}
   - component: {fileID: 6990873902260067403}
   - component: {fileID: 4543651849248035046}
-  - component: {fileID: -4058233176086613251}
   - component: {fileID: 5130009183475831021}
   m_Layer: 2
   m_Name: Default Ball
@@ -100,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   Damage: 1
+  velocity: {x: 0, y: 0}
 --- !u!58 &4543651849248035046
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -116,27 +116,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!50 &-4058233176086613251
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937043859103804917}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: d45ae6fb34380d54c959df39e8c6d492, type: 2}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!96 &5130009183475831021
 TrailRenderer:
   serializedVersion: 2

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 425638591562957577}
   - component: {fileID: 2280707890485919601}
   - component: {fileID: 489737727721976327}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,4 +112,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a5988577c535c49b60b0a871b1d535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
+  rotateSpeed: 100
