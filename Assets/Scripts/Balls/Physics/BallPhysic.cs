@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Physic : PhysicBase
+public class BallPhysic : BallPhysicBase
 {
-    public Physic(BallBase ball) : base(ball)
+    public BallPhysic(BallBase ball) : base(ball)
     {
     }
 
@@ -21,7 +21,7 @@ public class Physic : PhysicBase
         if (hit != default(RaycastHit2D))
         {
             distance -= hit.distance;
-            position += (Vector3)ball.velocity * hit.distance;
+            position += (Vector3)ball.velocity * (hit.distance);
             ball.velocity = Vector3.Reflect(ball.velocity, hit.normal);
         }
 
@@ -36,6 +36,20 @@ public class Physic : PhysicBase
             hit.distance -= offset;
         }
         return hit;
+    }
+
+    private RaycastHit2D MultiRayCasts(Vector3 origin, Vector3 velocity, float distance, float ballRadius)
+    {
+        RaycastHit2D mainHit = Raycast(origin, velocity, distance, ballRadius);
+        RaycastHit2D leftHit = Raycast((Vector3.Cross(velocity, Vector3.forward) * ballRadius) + origin, velocity, distance);
+        RaycastHit2D rightHit = Raycast((Vector3.Cross(velocity, Vector3.back) * ballRadius) + origin, velocity, distance);
+        if (mainHit != default(RaycastHit2D))
+            return mainHit;
+        if (leftHit != default(RaycastHit2D))
+            return leftHit;
+        if (rightHit != default(RaycastHit2D))
+            return rightHit;
+        return rightHit;
     }
 }
 

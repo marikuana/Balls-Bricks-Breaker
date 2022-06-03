@@ -11,17 +11,22 @@ public abstract class BallBase : MonoBehaviour
     public float Damage = 1f;
 
     public Vector2 velocity = Vector2.zero;
-    public PhysicBase Physic;
+    public BallPhysicBase Physic;
 
     void Awake()
     {
         //rb = GetComponent<Rigidbody2D>();
-        Physic = new Physic(this);
     }
 
     public BallBase Initialize(Vector3 position, Vector3 movement)
     {
+        return Initialize(position, movement, new BallPhysic(this));
+    }
+
+    private BallBase Initialize(Vector3 position, Vector3 movement, BallPhysicBase physic)
+    {
         transform.position = position;
+        Physic = physic;
         SetMovement(movement);
         return this;
     }

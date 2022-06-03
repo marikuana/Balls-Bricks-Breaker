@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public abstract class PhysicBase
+public abstract class BallPhysicBase
 {
     protected BallBase ball;
 
-    public PhysicBase(BallBase ball) =>
+    public BallPhysicBase(BallBase ball) =>
         this.ball = ball;
 
     public abstract Vector3 CalculatePosition();

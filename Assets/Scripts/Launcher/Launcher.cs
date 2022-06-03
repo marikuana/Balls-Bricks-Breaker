@@ -52,7 +52,9 @@ public class Launcher : MonoBehaviour
 
     public BallBase LaunchBall(BallType ballType, Vector3 vector)
     {
-        return Instantiate(ballFactory.GetBallPref(ballType), transform).Initialize(transform.position, vector);
+        BallBase ball = Instantiate(ballFactory.GetBallPref(ballType), transform);
+        ball.Initialize(transform.position, vector);
+        return ball;
     }
 
     public void RenderLine(bool visible) =>
