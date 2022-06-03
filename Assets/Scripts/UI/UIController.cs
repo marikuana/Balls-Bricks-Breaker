@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    private Text bulletCount;
-    [SerializeField]
     private TextMeshProUGUI moneyLabel;
 
     [SerializeField]
@@ -32,16 +30,6 @@ public class UIController : MonoBehaviour
         Manager.Instance.ProgressData.OnMoneyUpdate += SetMoney;
 
         Controller.Instance.OnStarChange += stars.SetStars;
-    }
-
-    private void Update()
-    {
-        SetBulletCount(0);
-    }
-
-    private void SetBulletCount(int value)
-    {
-        bulletCount.text = $"Bullets: {value}";
     }
 
     private void SetMoney(int money)
