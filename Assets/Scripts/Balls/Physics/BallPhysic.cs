@@ -20,6 +20,7 @@ public class BallPhysic : BallPhysicBase
         RaycastHit2D hit = Raycast(ball.transform.position, ball.velocity, distance, ballRadius);
         if (hit != default(RaycastHit2D))
         {
+            HitReaction(hit.collider);
             distance -= hit.distance;
             position += (Vector3)ball.velocity * (hit.distance);
             ball.velocity = Vector3.Reflect(ball.velocity, hit.normal);
@@ -50,6 +51,12 @@ public class BallPhysic : BallPhysicBase
         if (rightHit != default(RaycastHit2D))
             return rightHit;
         return rightHit;
+    }
+
+    private void HitReaction(Collider2D collider)
+    {
+        if (collider.gameObject.TryGetComponent(out Block block))
+            ball.Impact(block);
     }
 }
 
