@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelId: 6b7e22b7-d18f-4489-b3dc-8cb2e10f73f6
   BlockFactory: {fileID: 11400000, guid: 176a2e4cbe1e24540a623a4658b024a9, type: 2}
+  ItemFactory: {fileID: 11400000, guid: 2c50ac2922b412843904caa425d61d7f, type: 2}
   Blocks:
   - Position: {x: -2, y: -1}
     Heath: 10
@@ -25,3 +26,4 @@ MonoBehaviour:
     Heath: 5
     Type: 3
   balls: 000000000000000000000000000000000200000001000000
+  MoneyItems: []

@@ -14,9 +14,13 @@ public class Level : ScriptableObject
     [SerializeField]
     public BaseBlockFactory BlockFactory;
     [SerializeField]
+    public ItemFactory ItemFactory;
+    [SerializeField]
     public List<LevelBlocks> Blocks;
     [SerializeField]
     public BallType[] balls;
+    [SerializeField]
+    public List<MoneyItems> MoneyItems;
 
     private void Awake()
     {

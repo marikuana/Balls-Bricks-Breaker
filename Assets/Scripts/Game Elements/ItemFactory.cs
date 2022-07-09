@@ -6,7 +6,7 @@ public class ItemFactory : ScriptableObject
     [SerializeField]
     private Money moneyPref;
 
-    public Item GetItem(ItemType itemType)
+    public Item Get(ItemType itemType)
     {
         Item item = itemType switch
         {

@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Block : Item
 {
     [SerializeField] 
     public float health = 10f;
@@ -22,10 +22,15 @@ public class Block : MonoBehaviour
         SetText(health.ToString());
     }
 
-    public Block Init(Sprite sprite)
+    public void Initialize(Vector3 position, float health)
+    {
+        Initialize(position);
+        SetHealth(health);
+    }
+
+    public void SetSprite(Sprite sprite)
     {
         spriteRenderer.sprite = sprite;
-        return this;
     }
 
     public void Damage(float value)
@@ -38,11 +43,6 @@ public class Block : MonoBehaviour
     public bool Alive => 
         health > 0;
 
-    public void SetPosition(Vector3 position)
-    {
-        transform.position = position;
-    }
-
     public void SetHealth(float value)
     {
         SetText(value.ToString());
@@ -52,11 +52,6 @@ public class Block : MonoBehaviour
     private void SetText(string text)
     {
         label.text = text.ToString();
-    }
-
-    public void Destroy()
-    {
-        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

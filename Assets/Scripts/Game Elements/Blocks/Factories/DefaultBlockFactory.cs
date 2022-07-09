@@ -17,7 +17,8 @@ public class DefaultBlockFactory : BaseBlockFactory
             _ => null
         };
 
-        Block block = Instantiate(pref).Init(sprite);
+        Block block = Instantiate(pref);
+        block.SetSprite(sprite);
         return block;
     }
 }

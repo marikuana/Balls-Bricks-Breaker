@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using UnityEditor;
 
 public class Controller : MonoBehaviour
@@ -11,9 +9,6 @@ public class Controller : MonoBehaviour
 
     [SerializeField]
     private Launcher launcher;
-
-    private Level currentLevel;
-    private List<Block> levelOBlocks = new List<Block>();
 
     private int star;
     public event Action<int> OnStarChange;
@@ -25,10 +20,12 @@ public class Controller : MonoBehaviour
 
     public float SimulateSpeed => pause ? 0f : simulateSpeed;
 
+    private LevelController levelController;
+
     private void Awake()
     {
         Instance = this;
-
+        levelController = new LevelController();
         launcher.OnLaunchBall += DecrementStar;
     }
 
@@ -39,31 +36,29 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-        if (currentLevel == null)
-            return;
-
-        if (levelOBlocks.Where(block => block != null).Count() == 0)
+        if (levelController.Complete())
             CompleteLevel();
     }
 
     private void CompleteLevel()
     {
-        if (Manager.Instance.ProgressData.GetLevelStar(currentLevel) < star)
-            Manager.Instance.ProgressData.SetLevelStar(currentLevel, star);
+        if (Manager.Instance.ProgressData.GetLevelStar(levelController.Level) < star)
+            Manager.Instance.ProgressData.SetLevelStar(levelController.Level, star);
 
-        Initialize(Manager.Instance.LevelManager.GetNextLevel(currentLevel));
+        Initialize(Manager.Instance.LevelManager.GetNextLevel(levelController.Level));
     }
 
     public void Initialize(Level level)
     {
-        currentLevel = level;
-        launcher.SetBalls(currentLevel.balls);
-        RestartLevel();
+        levelController.LoadLevel(level);
+        launcher.Restart();
+        launcher.SetBalls(level.balls);
+        SetStar(4);
     }
 
     public void RestartLevel()
     {
-        LoadLevel(currentLevel);
+        levelController.RestartLevel();
         SetStar(4);
         
         launcher.Restart();
@@ -88,28 +83,5 @@ public class Controller : MonoBehaviour
     private void DecrementStar()
     {
         SetStar(--star);
-    }
-
-    public void LoadLevel(Level level)
-    {
-        UnloadLevel();
-
-        foreach (var obj in level.Blocks)
-        {
-            Block block = level.BlockFactory.Get(obj.Type);
-            block.SetHealth(obj.Heath);
-            block.SetPosition(obj.Position);
-            levelOBlocks.Add(block);
-        }
-    }
-
-    public void UnloadLevel()
-    {
-        foreach (var block in levelOBlocks.ToList())
-        {
-            if (block != null)
-                Destroy(block.gameObject);
-        }
-        levelOBlocks.Clear();
     }
 }

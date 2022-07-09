@@ -1,10 +1,20 @@
 ﻿using UnityEngine;
 
-public abstract class Item : MonoBehaviour
+public class Item : MonoBehaviour
 {
-    protected abstract void Collect();
+    protected void Initialize(Vector3 position)
+    {
+        SetPosition(position);
+    }
 
-    private void OnTriggerEnter2D(Collider2D collision) =>
-        Collect();
+    protected void SetPosition(Vector3 position)
+    {
+        transform.position = position;
+    }
 
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }
+

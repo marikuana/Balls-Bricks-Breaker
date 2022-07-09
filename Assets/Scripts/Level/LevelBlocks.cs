@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [Serializable]
-public class LevelBlocks
+public class LevelBlocks : LevelObjects
 {
-    public Vector2 Position;
     public int Heath;
     public BlockType Type;
 }

@@ -8,7 +8,8 @@ public class RandomBlockFactory : BaseBlockFactory
 
     public override Block Get(BlockType blockType)
     {
-        Block block = Instantiate(pref).Init(sprites[Random.Range(0, sprites.Length)]);
+        Block block = Instantiate(pref);
+        block.SetSprite(sprites[Random.Range(0, sprites.Length)]);
         return block;
     }
 }
