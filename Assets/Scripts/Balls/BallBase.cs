@@ -12,7 +12,7 @@ public abstract class BallBase : MonoBehaviour
 
     private Vector2 velocity = Vector2.zero;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -24,7 +24,7 @@ public abstract class BallBase : MonoBehaviour
         return this;
     }
 
-    void Update()
+    private void Update()
     {
         if (rb.velocity.normalized != Vector2.zero)
             velocity = rb.velocity.normalized;
