@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-public abstract class Item : MonoBehaviour
+public abstract class Item : MonoBehaviour, ITriggerable
 {
     protected abstract void Collect();
 
-    private void OnTriggerEnter2D(Collider2D collision) =>
+    public void OnTrigger()
+    {
         Collect();
-
+    }
 }

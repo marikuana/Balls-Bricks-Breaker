@@ -13,11 +13,11 @@ public class BallPhysic : BallPhysicBase
 
     public override Vector3 CalculatePosition()
     {
-        float distance = Time.deltaTime * ball.speed * Controller.Instance.SimulateSpeed;
+        float distance = Time.fixedDeltaTime * ball.speed * Controller.Instance.SimulateSpeed;
         float ballRadius = ball.transform.localScale.x / 2f;
         Vector3 position = ball.transform.position;
 
-        RaycastHit2D hit = Raycast(ball.transform.position, ball.velocity, distance, ballRadius);
+        RaycastHit2D hit = Physics2D.CircleCast(ball.transform.position, ballRadius, ball.velocity, distance);
         if (hit != default(RaycastHit2D))
         {
             HitReaction(hit.collider);

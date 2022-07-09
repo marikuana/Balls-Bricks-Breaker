@@ -40,12 +40,16 @@ public abstract class BallBase : MonoBehaviour
             velocity = new Vector2(velocity.x, Random.Range(0f, velocity.x / 2f)).normalized;
 
         rb.velocity = velocity * speed * Controller.Instance.SimulateSpeed;*/
-        transform.position = Physic.CalculatePosition();
-
+        
         if (transform.position.y < -5f)
         {
             Destroy();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        transform.position = Physic.CalculatePosition();
     }
 
     public void SetMovement(Vector3 movement)
@@ -61,4 +65,9 @@ public abstract class BallBase : MonoBehaviour
     }
 
     public abstract void Impact(Block block);
+}
+
+public interface ITriggerable
+{
+    void OnTrigger();
 }
